@@ -1,16 +1,37 @@
-# This is a sample Python script.
-
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+import words_fetcher
+import random
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+def congratulate_user():
+    print("You win!")
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+def is_game_over():
+    return guessed == WORDS_TO_WIN or errors == ERRORS_TO_LOSE
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+guessed = 0
+errors = 0
+
+WORDS_TO_WIN = 5
+ERRORS_TO_LOSE = 3
+
+words = words_fetcher.fetch_words(min_letters=9, max_letters=9)
+full_list = words_fetcher.fetch_words(min_letters=3, max_letters=9)
+word = words[random.randrange(0, len(words))]
+
+print(f"Can you make up {WORDS_TO_WIN} words from letters in word provided by me?")
+print(f"Your word is '{word}'")
+
+
+while not is_game_over():
+    guess = input("Your next take: ")
+    if guess in full_list:
+        guessed += 1
+        if guessed == WORDS_TO_WIN:
+            congratulate_user()
+            exit()
+        print(f"That's right! {WORDS_TO_WIN - guessed} to go")
+    else:
+        errors += 1
+        print(f"Oops :( No such word, you have {ERRORS_TO_LOSE - errors} lives more")
