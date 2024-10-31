@@ -56,5 +56,6 @@ while not is_game_over():
         errors += 1
         if errors == ERRORS_TO_LOSE:
             print("You lost! You've used all tries!")
+            exit()
 
         print(f"Oops :( No such word, you have {ERRORS_TO_LOSE - errors} lives more")
